@@ -1,0 +1,77 @@
+@startuml classes
+package TicketSystem {
+    
+    class Ticket {
+        - match: Match
+        - seat: Seat
+        + Ticket(match: Match, seat: Seat)
+        + getMatch(): Match
+        + getSeat(): Seat
+    }
+
+    class Match {
+        - date: Date
+        - teams: String[]
+        + Match(date: Date, teams: String[])
+        + getDate(): Date
+        + getTeams(): String[]
+    }
+
+    class Stadium {
+        - name: String
+        - location: String
+        - capacity: int
+        + Stadium(name: String, location: String, capacity: int)
+        + getName(): String
+        + getLocation(): String
+        + getCapacity(): int
+    }
+
+    class Seat {
+        - number: int
+        - row: int
+        + Seat(number: int, row: int)
+        + getNumber(): int
+        + getRow(): int
+    }
+}
+
+package TicketSales {
+    class TicketOffice {
+        - tickets: List<Ticket>
+        + TicketOffice()
+        + sellTicket(ticket: Ticket): void
+        + refundTicket(ticket: Ticket): void
+    }
+
+    class TicketSeller {
+        + TicketSeller()
+    }
+
+    class TicketManager {
+        - ticketScanner: TicketScanner
+        + TicketManager(scanner: TicketScanner)
+        + scanTicket(ticket: Ticket): void
+    }
+
+    class PaymentGateway {
+        + PaymentGateway()
+    }
+}
+
+package AccessControl {
+    class TicketScanner {
+        + TicketScanner()
+        + scanTicket(ticket: Ticket): void
+    }
+}
+
+Ticket -- Match
+Ticket *-- Stadium
+Ticket *-- Seat
+TicketOffice "1"-- "*" Ticket
+TicketOffice o-- TicketSeller
+TicketOffice o-- TicketManager
+TicketManager -- TicketScanner
+PaymentGateway <|-- TicketOffice
+@enduml
