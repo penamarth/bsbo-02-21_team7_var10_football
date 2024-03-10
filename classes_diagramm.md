@@ -1,8 +1,6 @@
-<!-- 
-uml code
-@startuml classes
+```
+@startuml
 package TicketSystem {
-    
     class Ticket {
         - match: Match
         - seat: Seat
@@ -14,9 +12,12 @@ package TicketSystem {
     class Match {
         - date: Date
         - teams: String[]
-        + Match(date: Date, teams: String[])
+        - stadium: Stadium
+        + Match(date: Date, teams: String[], stadium: Stadium)
         + getDate(): Date
         + getTeams(): String[]
+        + getStadium(): Stadium
+        + setStadium(stadium: Stadium): void
     }
 
     class Stadium {
@@ -25,8 +26,11 @@ package TicketSystem {
         - capacity: int
         + Stadium(name: String, location: String, capacity: int)
         + getName(): String
+        + setName(name: String): void
         + getLocation(): String
+        + setLocation(location: String): void
         + getCapacity(): int
+        + setCapacity(capacity: int): void
     }
 
     class Seat {
@@ -34,54 +38,71 @@ package TicketSystem {
         - row: int
         + Seat(number: int, row: int)
         + getNumber(): int
+        + setNumber(number: int): void
         + getRow(): int
+        + setRow(row: int): void
     }
 }
 
 package TicketSales {
     class TicketOffice {
         - tickets: List<Ticket>
+        - ticketManager: TicketManager
         + TicketOffice()
         + sellTicket(ticket: Ticket): void
         + refundTicket(ticket: Ticket): void
     }
 
     class TicketSeller {
-        + TicketSeller()
+        - name: String
+        - employeeID: String
+        + TicketSeller(name: String, employeeID: String)
+        + greetCustomer(): void
+        + provideInformation(): void
     }
 
     class TicketManager {
         - ticketScanner: TicketScanner
         + TicketManager(scanner: TicketScanner)
-        + scanTicket(ticket: Ticket): void
+        + scanTicket(ticket: Ticket): bool
     }
 
     class PaymentGateway {
         + PaymentGateway()
+        + processPayment(amount: double): boolean
+        + getPaymentStatus(paymentID: String): String
     }
 }
+
 
 package AccessControl {
     class TicketScanner {
         + TicketScanner()
-        + scanTicket(ticket: Ticket): void
+        + scanTicket(ticket: Ticket): bool
     }
 }
 
+interface ITicketScan {
+    + TicketScanner()
+    + scanTicket(ticket: Ticket): bool
+}
+
+
 Ticket -- Match
-Ticket *-- Stadium
+Match *-- Stadium
 Ticket *-- Seat
 TicketOffice "1"-- "*" Ticket
 TicketOffice o-- TicketSeller
 TicketOffice o-- TicketManager
 TicketManager -- TicketScanner
-PaymentGateway <|-- TicketOffice
-@enduml 
--->
+TicketOffice --> PaymentGateway
+Ticket "1"-- "*" ITicketScan
+ITicketScan --> TicketManager
+ITicketScan --> TicketScanner
+    
+@enduml
+```
 
-
-<!-- for decode uml - //www.plantuml.com/plantuml/png/bLNDRjD04BxxALOvkQrpu6fLgAX8N5f0f3V4OLXFmghsBjgT44N0kpDs1ZBZ15NnmPM_dvblThhjNI78j1twwZluPzYWUmh-6McrBuI3-ravVdmFfGWnGl8itG3alxNkSVoXu890hLln-nzu8_PQMngbl5BI3TB4rrSYjDmeP-hOu7UbOau6ax83mjQzvRS22M4eN8DoY9lFNrI7G-kZgPbhPr573SUPj9Pv6drCcIucBJFGXUrWyaOOyAz7mNtoG275CvG7tbwWVUj2r6SkrMjTiJafr5Z_RBptx3tEOBa7gVG__bxgCY_9vkCZa9rzEtp5FAaLcjFkP3HsrahTYEWq_wIH19Rwb7Os6MURNGFeiPov1H_Mw-3H9AU9AArx28Lk3xBNgfysrZfZmRwNot6eqOgMe_r8eLFIZEjjx5uKcoEMGRW9PXNunX0Iw8pn4I9in6b7NNc84JC7q9-gWIbGbxDoSn0CNJRRHzWF6EaT4EvWRwQpbCndDlp6UopbFaNAgJSxDWbDLSFK5uQN_WVOBPVojqs-hncG-seW1AhCBztYrOBnnVL26bWsCQStUygQjLHsoqpRRSvE-FONAtJ5wWvZD_xx-0C0 -->
-
-<img src="https://www.plantuml.com/plantuml/svg/bLNDRjD04BxxALOvkQrpu6fLgAX8N5f0f3V4OLXFmghsBjgT44N0kpDs1ZBZ15NnmPM_dvblThhjNI78j1twwZluPzYWUmh-6McrBuI3-ravVdmFfGWnGl8itG3alxNkSVoXu890hLln-nzu8_PQMngbl5BI3TB4rrSYjDmeP-hOu7UbOau6ax83mjQzvRS22M4eN8DoY9lFNrI7G-kZgPbhPr573SUPj9Pv6drCcIucBJFGXUrWyaOOyAz7mNtoG275CvG7tbwWVUj2r6SkrMjTiJafr5Z_RBptx3tEOBa7gVG__bxgCY_9vkCZa9rzEtp5FAaLcjFkP3HsrahTYEWq_wIH19Rwb7Os6MURNGFeiPov1H_Mw-3H9AU9AArx28Lk3xBNgfysrZfZmRwNot6eqOgMe_r8eLFIZEjjx5uKcoEMGRW9PXNunX0Iw8pn4I9in6b7NNc84JC7q9-gWIbGbxDoSn0CNJRRHzWF6EaT4EvWRwQpbCndDlp6UopbFaNAgJSxDWbDLSFK5uQN_WVOBPVojqs-hncG-seW1AhCBztYrOBnnVL26bWsCQStUygQjLHsoqpRRSvE-FONAtJ5wWvZD_xx-0C0" alt="Golang Version">
+<img src="https://www.plantuml.com/plantuml/dsvg/hLN1Jjn03BtdAw8zpK8uzBgg41L85HAqLPTRrOD9l3GYCxEQSK2hYd_lXBYDdGchgkeUGiRFVdwsyUGY4WJgRLVieNw41oplsleHQNk8XBRyMPJfLtSG8mDi6dvdfGMgVspAs-6FC4S4sfJRzFnZFELm8qCguRaMhWz8hxXPiwF61lS4JGbUYadc6A1KDa2uAQ_IKnW9mSR4GQ5r3z--I_K4JTlRX8ql8lceQkAhvZHL5ZshQuWowp5Q8tS3arbFN1fcki4XrnKdV9u_-J_vjidxnBZgb0EBlmK8S-TheDQx1QY6FTGj7JPbw-IqcTr8nYeZgdJyh5UVKkpK45akOvASwzGCDvnlcKNWax0ZR9UiTM3JrKO1wehUx3u2wTRtzXw38axMu9_dkOP88xmhTihRz-gp99OXoR9Oy5V_l1W-s3dfhCANOdwFG8TnuHhvlDkrDQeEq2kGbkccZVH-T3lFy5jmYJric8UFGf_aDsiblEj6q8nKpB5GUy1TxvfZplb4kTwK1CFVB1NQVUSFYDTN6NYgoFGEBSIfkGT4kkmZUPiYyyhsmJ-r3LwxdG-MT-DuHTpXXL5jQt1k6WKVHJ95OEAYkvfGChtLz7llkrpY5pXOTFGH29_X83IUpY2praseCKRsC61zxrAknlVt7N8k1AUNWRst1DH7inzFOWXgYceJFjH3jallAFXExOBgX5Al4FCFJU8sjOumxA36ydgY_B-PYcAqbcTd_BKUFy4dwSoV0VOOJGXKg4jWzMwLxAkJ5TDhr2TChaEEwfj0dP8cLQ2EJkZvxF-4SQ59zAqGxqEipfoZAl45kgQttIy0" alt="UML">
 
 
