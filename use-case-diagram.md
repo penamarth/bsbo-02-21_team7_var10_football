@@ -12,6 +12,7 @@ rectangle "Point-of-Sale System" {
     usecase "Сканирование билета" as ScanTicket
     usecase "Возврат билета" as RefundTicket
     usecase "Обработка платежа" as ProcessPayment
+    usecase "Получение информации" as GetInformation
 
     C --> PurchaseTicket
     PurchaseTicket --> PS : Оплата билета
@@ -24,9 +25,13 @@ rectangle "Point-of-Sale System" {
     RefundTicket --> TS : Возврат билета
 
     PS --> ProcessPayment
+
+    C --> GetInformation
+    GetInformation --> TS : Получение информации
 }
 
 @enduml
+
 ```
 
-<img src="https://www.plantuml.com/plantuml/svg/ZPDFQi905CRtSug7-roWYo9u0UbuWM4SDJIPWPd9Gaf1xB8x3s3f3KR1LYnDh_1oexvCj6Wqq6mUxy_lo_TUIDzvONsHPonJ4m_UW4sdCm_Zr2hfKwCP4z8R2uF2UPCh2yB1u5WRfV9HUQwohAcF-6L32grF7Nbi3SKyLzhpkVCghrj3pbZzBg6dcOBUqAJQ9sQIS45fCzQ39mRq54v9uMW8twe5xh743SLTjSGTVbE-0znG-8gbq8lgXPKpOXf7BPLtF62eIL8fSOkXIwNUvAR2YhXFt18VgkKrzw0cXHxV9DVHUo2af77o0VX3R8ZBV9pSMoELSyURiIWnW2Ivlx5NgzHCSRW3NFyfXmkBNTGeKglgDPfRN320-zfeYOVgXIBvFdVLkbDCptKb2V_hwkUYLqTi2jU6Exy5QpRbSRXrqsV6-agFwp_W5m00" alt="UML">
+<img src="https://www.plantuml.com/plantuml/svg/ZLDDQi905DxFAGRtkK0NHN1HkfF62mpZH4EJ6PYPBAGKH4kxwCu3M7g3ADYArlGARsxKbqJ5J1NCmk7zVD_xllUmRIpJDaiJaeZ8KgkeZWT3I_kn5jp6IXB2k5MQTZ9ZLIeqPOPszhbUp1-53KMIrFbUs2nm9kMXmlUbBXkbGjfmPAn8or8t9AISnUGW4RJLLR6qWOg2a65OjxNe4w7uPKPmPh09FjmOrb300j-Lcy0ATXYlA2pmsLQfl5MnPveF4LChybW-OGDvYKIM0fQGNs8fdPnbc27k6vQ8pztaF-v1H9didqNEA-qvGWfiHnqKVX6RLsQ-3kgruiAO_Sxy7U3ihPkwjwDx_Dcv5oYG-0UPNZ5ULpntmjxBIEcKrIUb-7Le4DoUsO-Nghj2UaDXVbIODwnUGlKgrCozLoR73GngBGqNi75JVD7_YIf_tsNOuEL8VCNrcgJ-CGu9Nx1_KvyDbu7DtcrE1ldRnhoNEXbstH79Co5j8Vlb__GF" alt="UML">
